@@ -53,3 +53,24 @@ function loadTask() {
     var init5 = JSON.parse(localStorage.getItem("05:00 pm"));
     fivePm.val(init5);
 }
+
+// change timeblock color based on relation to current user time
+function timeColor () {
+    $(".form-control").search(function () {
+        var timeCheck = parseInt($(this).attr("id"));
+        hour = parseInt(hour);
+        if (hour > timeCheck) {
+            $(this).addClass("past");
+        } else if (hour < timeCheck) {
+            $(this).addClass("future");
+        } else {
+            $(this).addClass("present")
+        }
+    });
+}
+
+// on page start
+$(document).ready(function(){
+    loadTask()
+    timeColor()
+});
