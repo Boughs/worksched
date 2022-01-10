@@ -17,7 +17,7 @@ var onePm = $("#13pm");
 var twoPm = $("14pm");
 var threePm = $("15pm");
 var fourPm = $("16pm");
-var fivepm = $("17pm");
+var fivePm = $("17pm");
 
 // load users schedule from local memory
 var hour = moment().hours();
@@ -52,11 +52,11 @@ function loadTask() {
 
     var init5 = JSON.parse(localStorage.getItem("05:00 pm"));
     fivePm.val(init5);
-}
+};
 
 // change timeblock color based on relation to current user time
 function timeColor () {
-    $(".form-control").search(function () {
+    $(".form-control").each(function () {
         var timeCheck = parseInt($(this).attr("id"));
         hour = parseInt(hour);
         if (hour > timeCheck) {
@@ -67,10 +67,17 @@ function timeColor () {
             $(this).addClass("present")
         }
     });
-}
+};
 
 // on page start
 $(document).ready(function(){
     loadTask()
     timeColor()
+
+    // clicking save icon will save task to users local storage
+    $(".saveBtn").on("click", function(){
+        userInput = $(this).siblings(".form-control").val().trim();
+        hourSpan = $(this).siblings(".input-group-prepend").text().trim();
+        localStorage.setItem(hourSpan, JSON.stringify(userInput));
+    })
 });
